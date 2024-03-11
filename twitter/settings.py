@@ -75,7 +75,7 @@ WSGI_APPLICATION = 'twitter.wsgi.application'
 
 
 
-# postgresql db connection code start
+
 
 DATABASES = {
     'default': {
@@ -87,7 +87,7 @@ DATABASES = {
         'PORT': '5432',
     }
 }
-# postgresql db connection code end
+
 
 
 # Password validation
