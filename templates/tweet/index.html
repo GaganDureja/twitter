@@ -10,148 +10,51 @@
 
         {% endblock %}
 
-
+		<link rel="stylesheet" href="{% static 'css/main.css' %}" >
 
     </head>
     <body>
-        <div class="container m-4 ">
-            <div class="row justify-content-center align-items-center">
-                <div class="col-lg-5 pr-lg-5 text-center d-none d-lg-block">
-                    <img src="{% static 'img/twitter_logo.png' %}" alt="" class="img-fluid" width="350" height="268">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-4">
+                    <img src="{% static 'img/twitter_logo.png' %}" alt="Error" width="350" height="268">
                 </div>
-                <div class="col-lg-5">
-                    <h1>Happening Now</h1>
+
+				<div class="col-sm-4">
+					<h1>Login</h1>
+					<h4>Already have an account.</h4>
+                    <form method="post" action="{% url 'user:Signin' %}">
+						{% csrf_token %}
+						<label>Email / Username / Phone</label><br>
+						<input type="text"  name="email">
+						<br>
+						<label>Password</label><br>
+						<input type="password"  name="password">
+						<br>
+						<input type="submit" value="Login">
+					</form>
+                </div>
+
+
+				<div class="col-sm-4">
+                    <h1>Register</h1>
                     <h4>Join Today.</h4>
-                    <div class="box_about">
-                        <div class="sign-in-wrapper">
-                            <div class="text-center">
-                                <a href="javascript.void(0)"  data-bs-toggle="modal" data-bs-target="#sign_up_modal"  class="access_link btn_1 full-width"  >Create Account</a><br>
-                                By signing up, you agree to the Terms of Service and Privacy Policy, including Cookie Use.
-                            </div>
-                            <br>
-                            <h5>Already have an account?</h5>
-                            <a href="javascript.void(0)" data-bs-toggle="modal" data-bs-target="#sign_in_modal" class="btn_1 full-width">Sign In</a>
-                        </div>
-                    </div>
-                </div>
+					<form id="sign-in-dialog" method="post" action="{% url 'user:Signup' %}">
+						{% csrf_token %}
+						<label>Name</label><br>
+						<input type="text"  name="name" required><br>
+						<label>Email</label><br>
+						<input type="email"  name="email" required><br>
+						<label>Password</label><br>
+						<input type="password"  name="password" required><br>
+						<input type="submit" value="Register"><br>
+						</div>
+					</form>
+				</div>
+
             </div>
             <!-- /row -->
         </div>
-
-
-
-
-
-        <!-- Sign Up Modal -->
-		<div class="modal fade" id="sign_up_modal">
-			<div class="modal-dialog">
-				<div class="modal-content">
-					<div class="modal-header">
-						<h3>Sign Up</h3>
-						<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-					</div>
-					<div class="modal-body">
-						<form id="sign-in-dialog" method="post" action="{% url 'user:Signup' %}">
-							{% csrf_token %}
-							<div class="sign-in-wrapper">
-								<div class="form-group">
-									<label>Name</label>
-									<input type="text" class="form-control" name="name" required>
-								</div>
-								<div class="form-group">
-									<label>Email</label>
-									<input type="email" class="form-control" name="email" required>
-								</div>
-
-								<div class="form-group">
-									<label>Password</label>
-									<input type="password" class="form-control" name="password" required>
-								</div>
-
-								<div class="text-center">
-									<input type="submit" value="Sign Up" class="btn_1 full-width">
-									Already have an account? <a href="javascript.void(0)" data-bs-toggle="modal" data-bs-target="#sign_in_modal">Sign In</a>
-								</div>
-							</div>
-						</form>
-					</div>
-				</div>
-			</div>
-		</div>
-		<!-- /Sign Up Modal -->
-
-
-
-
-		<!-- Sign In Modal -->
-		<div class="modal fade" id="sign_in_modal">
-			<div class="modal-dialog">
-				<div class="modal-content">
-					<div class="modal-header">
-						<h3>Sign In</h3>
-						<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-					</div>
-					<div class="modal-body">
-
-						<form id="sign-in-dialog" method="post" action="{% url 'user:Signin' %}">
-							{% csrf_token %}
-							<div class="sign-in-wrapper">
-								<div class="form-group">
-									<label>Email / Username / Phone</label>
-									<input type="text" class="form-control" name="email">
-								</div>
-								<div class="form-group">
-									<label>Password</label>
-									<input type="password" class="form-control" name="password">
-								</div>
-								<div class="clearfix add_bottom_15">
-									<div class="float-end mt-1">
-										<a id="forgot" href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#forgot_password_modal">
-											Forgot Password?
-										</a>
-									</div>
-								</div>
-								<div class="text-center">
-									<input type="submit" value="Sign In" class="btn_1 full-width">
-									Don’t have an account? <a href="javascript.void(0)"  data-bs-toggle="modal" data-bs-target="#sign_up_modal">Sign up</a>
-								</div>
-							</div>
-						</form>
-						<!--form -->
-
-					</div>
-				</div>
-			</div>
-		</div>
-		<!-- /Sign In Modal -->
-
-
-
-
-
-		<!-- Forgot password Modal -->
-		<div class="modal fade" id="forgot_password_modal">
-			<div class="modal-dialog">
-				<div class="modal-content">
-					<div class="modal-header">
-						<h3>Forgot Password</h3>
-						<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-					</div>
-					<div class="modal-body">
-						<form id="sign-in-dialog" method="post">
-							{% csrf_token %}
-							<div class="form-group">
-								<label>Please confirm login email below</label>
-								<input type="email" class="form-control" name="email" id="email_forgot">
-							</div>
-							<p>You will receive an email containing a link allowing you to reset your password to a new preferred one.</p>
-							<div class="text-center"><input type="submit" value="Reset Password" class="btn_1"></div>
-						</form>
-					</div>
-				</div>
-			</div>
-		</div>
-		<!-- /Forgot password Modal -->
 
 
 
