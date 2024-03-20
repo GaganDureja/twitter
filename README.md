@@ -3,7 +3,6 @@ This is a basic clone of Twitter.
 
 
 
-
 How to Run/Setup -
 
 Follow the below steps and test this on your local computer.
