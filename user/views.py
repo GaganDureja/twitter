@@ -8,7 +8,6 @@ from django.contrib.auth import authenticate, login, logout
 
 
 
-
 def home(request):
     if request.user.is_authenticated:
         return render(request,'tweet/home.html')
