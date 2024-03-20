@@ -1,4 +1,10 @@
 {% extends "includes/base.html" %}
-<div>
-    Hii
-</div>
+
+
+
+
+
+{% block main_content %}
+    <div>Hiii</div>
+    <a href="{% url 'user:Logout' %}">Logout</a>
+{% endblock %}
