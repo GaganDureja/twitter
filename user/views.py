@@ -9,66 +9,75 @@ from django.contrib.auth import authenticate, login, logout
 
 
 def check_login(request):
-    return redirect('home') if request.user.is_authenticated else render(request,'tweet/index.html')
+    if request.user.is_authenticated:
+        return redirect('home')
+    return render(request,'tweet/index.html')
+
+    # return redirect('home') if request.user.is_authenticated else render(request,'tweet/index.html')
     # if request.user.is_authenticated:
     #     return redirect('home')
     # return render(request,'tweet/index.html')
 
 
 def home(request):
-    return render(request,'tweet/home.html') if request.user.is_authenticated else redirect('index')
+    if request.user.is_authenticated:
+        return render(request,'tweet/home.html')
+    return redirect('index')
+
+    # return render(request,'tweet/home.html') if request.user.is_authenticated else redirect('index')
     # if request.user.is_authenticated:
     #     return render(request,'tweet/home.html')
     # return redirect('index')
 
 def signup(request):
-    if request.user.is_authenticated:
+    if request.user.is_authenticated or request.method == 'GET':
         return redirect('index')
-    else:
-        if request.method == 'GET':
-            return redirect('index')
-        if request.method == 'POST':
-            email = request.POST.get('email')
-            if not email:
-                messages.warning(request, "Email required")
-                return redirect('index')
-            if User.objects.filter(email=email):
-                messages.warning(request, "User already exists with this email")
-                return redirect('index')
+    # first name and last name
+    email = request.POST.get('email')
+    name = request.POST.get('name')
+    password = make_password(request.POST.get('password'))
+    try:
+        user = User.objects.create(username=email, password=password)
+        messages.success(request, "Login to continue")
+    except Exception as e:
+        messages.error(request, e )
 
-            full_name = request.POST.get('name')
-            full_username = "".join(full_name.split())
-            user_name = full_username
-
-            while User.objects.filter(username=user_name).exists():
-                random_number = random.randint(1, 9999)
-                user_name = f"{full_username}{random_number}"
-            User.objects.create(
-                password = make_password(request.POST.get('password')),
-                username = user_name,
-                first_name = full_name,
-                email=email
-            )
-            messages.success(request, "Login to continue")
-            return redirect('index')
-
+    # user, created = User.objects.create(
+    #     password = password,
+    #     username = email,
+    #     first_name = name,
+    #     email=email
+    # )
+    # if not created:
+    #     messages.error(request, "Error")
+    # else:
+    #     messages.success(request, "Login to continue")
+    return redirect('index')
 
 
 
 
 def signin(request):
-    if request.method == 'POST':
-        unique_identity = request.POST.get('email')
-        password = request.POST.get('password')
-        select_user = User.objects.filter(Q(email=unique_identity) | Q(phone=unique_identity) | Q(username=unique_identity))
-        if select_user:
-            unique_identity = select_user.first().username
-            user = authenticate(request,username=unique_identity,password=password)
-            login(request, user) if user else messages.error(request, "Incorrect password!!!")
-        else:
-            messages.warning(request, "Account not found")
-    return redirect('index')
+    if request.method == 'GET' or request.user.is_authenticated:
+        return redirect('index')
 
+    unique_identity = request.POST.get('email')
+    password = request.POST.get('password')
+    select_user = User.objects.filter(email=unique_identity)
+
+    if not select_user:
+        messages.warning(request, "Account not found")
+        return redirect('index')
+
+    unique_identity = select_user.first().username
+    user = authenticate(request,username=unique_identity,password=password)
+
+    if not user:
+        messages.error(request, "Incorrect password!!!")
+        return redirect('index')
+
+    login(request, user)
+    return redirect('index')
     # if request.user.is_authenticated:
     #     return redirect('index')
     # else:
