@@ -84,7 +84,7 @@ WSGI_APPLICATION = 'twitter.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'twitter1',
+        'NAME': 'twitter',
         'USER': 'postgres',
         'PASSWORD': '123',
         'HOST': '127.0.0.1',
