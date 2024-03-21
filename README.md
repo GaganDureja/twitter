@@ -8,12 +8,12 @@ This is a basic clone of Twitter.
 
 Follow the below steps and test this on your local computer.
 
-1. Open Command Promt/Terminal
-2. Check if python is installed on your system by typing `python --version` / `pyhton3 --version`
+1. Open Command Prompt/Terminal
+2. Check if python is installed on your system by typing `python --version` / `python3 --version`
 3. If installed then skip this step or get it from here. [Download Python](https://www.python.org/downloads/)
 4. Check if postgresql is installed if not then download from [Download postgresql](https://www.postgresql.org/download/)
 5. Open terinal and type `git clone git@github.com:GaganDureja/twitter.git` and after download is finished type `cd twitter`.
-6. Now all set you're in the project directory, make a virtual environment so the package is installed as used in this project. Type `python3 -m virtualenv twitterEnv` (here twitterEnv is our virtua environment name).
+6. Now all set you're in the project directory, make a virtual environment so the package is installed as used in this project. Type `python3 -m virtualenv twitterEnv` (here twitterEnv is our virtual environment name).
 7. Now activate the virtual env type - `source twitterEnv/bin/activate`
 8. Then install the project requirement with command  `pip install -r requirements.txt`
 9. Open pgadmin. You can open it in browser [pgadmin](http://127.0.0.1/pgadmin4/) or the application.
