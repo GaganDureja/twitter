@@ -12,8 +12,11 @@ Follow the below steps to run the project on your local computer:
 5. Clone the project repository by typing the following command in the terminal:
 `git clone git@github.com:GaganDureja/twitter.git`
 6. Navigate to the project directory. `cd twitter`
-7. Create a virtual environment to manage project dependencies. Run: 
-`python3 -m venv twitterEnv`
+7. Create a virtual environment to manage project dependencies Install and Run:
+```bash
+sudo apt install python3-venv
+python3 -m venv twitterEnv
+```
 8. Activate the virtual environment: `source twitterEnv/bin/activate`
 9. Install the project requirements by running: `pip install -r requirements.txt`
 10. Open pgAdmin either in the browser [pgAdmin](http://127.0.0.1/pgadmin4/) or using the application.
