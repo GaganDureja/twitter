@@ -6,7 +6,7 @@
             {% csrf_token %}
             <div>
                 <label>Tweet</label>
-                <input type="text" name="tweet_message" required>
+                <textarea type="text" name="tweet_message" rows="4" cols="90" maxlength="160" style="resize: none;" placeholder="Share what's in your mind (max characters 160)" required></textarea>
             </div>
             <div>
                 <input type="submit" value="Save">
