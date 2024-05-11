@@ -1,0 +1,15 @@
+{% extends "includes/base.html" %}
+{% block main_content %}
+    <h4>Add a Tweet</h4>
+    <form method="post" action="{% url 'tweet:add_tweet' %}">
+        {% csrf_token %}
+        <div>
+            <label>Tweet</label>
+            <input type="text" name="tweet_message" required>
+        </div>
+        <div>
+            <input type="submit" value="Save">
+        </div>
+    </form>
+    <a href="{% url 'user:Logout' %}" style="float: right;">Logout</a>
+{% endblock %}
