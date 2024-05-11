@@ -36,7 +36,7 @@ def signin(request):
 
     email = request.POST.get('email')
     password = request.POST.get('password')
-    select_user = User.objects.filter(username=email)
+    select_user = User.objects.filter(email=email)
 
     if not select_user:
         messages.warning(request, "Account not found")
