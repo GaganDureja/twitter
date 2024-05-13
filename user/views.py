@@ -3,6 +3,8 @@ from django.contrib.auth.hashers import make_password
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from .models import User
+from django.http import Http404
+
 
 
 
@@ -10,7 +12,7 @@ from .models import User
 def home(request):
   if request.user.is_authenticated:
     return render(request,'home.html')
-  return render(request,'user/login.html')
+  return redirect('user:newSession')
 
 def newRegistration(request):
   if request.user.is_authenticated:
@@ -18,7 +20,9 @@ def newRegistration(request):
   return render(request,'user/register.html')
 
 def createRegistration(request):
-  if request.user.is_authenticated or request.method != 'POST':
+  if request.method != 'POST':
+    raise Http404("Page not found")
+  if request.user.is_authenticated:
     return redirect('home')
   email = request.POST.get('email')
   username = email.split("@")[0]
@@ -38,7 +42,9 @@ def newSession(request):
   return render(request,'user/login.html')
 
 def createSession(request):
-  if request.user.is_authenticated or request.method != 'POST':
+  if request.method != 'POST':
+    raise Http404("Page not found")
+  if request.user.is_authenticated:
     return redirect('home')
   email = request.POST.get('email')
   username = email.split("@")[0]
