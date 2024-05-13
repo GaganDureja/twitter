@@ -9,14 +9,14 @@ from .models import User
 
 def home(request):
     if request.user.is_authenticated:
-        return render(request,'tweet/home.html')
-    return render(request,'tweet/login.html')
+        return render(request,'home.html')
+    return render(request,'user/login.html')
 
 def signup(request):
     if request.user.is_authenticated:
         return redirect('home')
     if request.method == 'GET':
-        return render(request,'tweet/register.html')
+        return render(request,'user/register.html')
     email = request.POST.get('email')
     first_name = request.POST.get('first_name')
     last_name = request.POST.get('last_name')
@@ -32,7 +32,7 @@ def signin(request):
     if request.user.is_authenticated:
         return redirect('home')
     if request.method == 'GET':
-        return render(request,'tweet/login.html')
+        return render(request,'user/login.html')
 
     email = request.POST.get('email')
     password = request.POST.get('password')
