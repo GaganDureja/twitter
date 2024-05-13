@@ -4,14 +4,15 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from .models import User
 from django.http import Http404
-
+from tweet.models import Tweet
 
 
 
 
 def home(request):
   if request.user.is_authenticated:
-    return render(request,'home.html')
+    all_tweets = Tweet.objects.all().order_by('-id')
+    return render(request,'tweet/home.html', {'all_tweets': all_tweets})
   return redirect('user:newSession')
 
 def newRegistration(request):
