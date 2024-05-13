@@ -24,7 +24,7 @@
           <form
             id="sign-in-dialog"
             method="post"
-            action="{% url 'user:Signup' %}"
+            action="{% url 'user:createRegistration' %}"
           >
             {% csrf_token %}
             <div>
@@ -46,7 +46,7 @@
             <div>
               <input type="submit" value="Register" />
             </div>
-            <a href="{% url 'user:Signin' %}">Login</a>
+            <a href="{% url 'user:newSession' %}">Login</a>
           </form>
         </div>
       </div>
