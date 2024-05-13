@@ -1,48 +1,30 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <title>Twitter</title>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-
-        {% block specific_meta %}
-
-        {% endblock %}
-
-
-
-    </head>
-    <body>
-
-        <div class="container">
-            <div class="row">
-
-                <div class="col-md-3">
-                    <div class="left_sidebar">
-
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    {% block main_content %}
-
-                    {% endblock %}
-                </div>
-
-                <div class="col-md-3">
-                    <div class="right_sidebar"></div>
-                </div>
-            </div>
+  <head>
+    <title>Twitter</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    {% block specific_meta %}
+    {% endblock %}
+  </head>
+  <body>
+    <div class="container">
+      <div class="row">
+        <div class="screen_50 margin_auto">
+          {% block main_content %}
+          {% endblock %}
         </div>
+      </div>
+    </div>
+    {% if messages %}
+      {% for message in messages %}
+        {{message}}
+      {% endfor %}
+    {% endif %}
 
-        {% if messages %}
-            {% for message in messages %}
-                {{message}}
-            {% endfor %}
-        {% endif %}
-
-        {% block specific_js %}
-
-	    {% endblock %}
-
-    </body>
+    {% block specific_js %}
+    {% endblock %}
+  </body>
 </html>

@@ -1,0 +1,30 @@
+.container{
+    width: 100%;
+    padding-top: 2rem;
+}
+
+.row{
+    display: flex;
+    flex-wrap: wrap;
+}
+.screen_25 {
+    flex: 0 0 auto;
+    width: 25%;
+}
+
+.screen_50 {
+  flex: 0 0 auto;
+  width: 50%;
+}
+
+.margin_auto {
+    margin: auto;
+}
+
+label{
+    display:block;
+}
+
+input{
+    margin-bottom:1rem;
+}

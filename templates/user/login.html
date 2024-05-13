@@ -1,0 +1,48 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Twitter</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="{% static 'css/main.css' %}" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="row">
+        <div class="screen_50">
+          <img
+            src="{% static 'image/twitter_logo.png' %}"
+            alt="Twitter Image Failed to load"
+            width="350"
+            height="268"
+          />
+        </div>
+        <div class="screen_50">
+          <h1>Login</h1>
+          <h4>Already have an account.</h4>
+          <form method="post" action="{% url 'user:createSession' %}">
+            {% csrf_token %}
+            <div>
+              <label>Email</label>
+              <input type="email" name="email" required />
+            </div>
+            <div>
+              <label>Password</label>
+              <input type="password" name="password" required />
+            </div>
+            <div>
+              <input type="submit" value="Login" />
+            </div>
+            <a href="{% url 'user:newRegistration' %}">Register</a>
+          </form>
+        </div>
+      </div>
+    </div>
+    {% if messages %}
+      {% for message in messages %}
+        {{message}}
+      {% endfor %}
+    {% endif %}
+  </body>
+</html>
