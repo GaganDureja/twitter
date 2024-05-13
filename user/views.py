@@ -8,9 +8,9 @@ from .models import User
 
 
 def home(request):
-    if request.user.is_authenticated:
-        return render(request,'home.html')
-    return render(request,'user/login.html')
+  if request.user.is_authenticated:
+    return render(request,'home.html')
+  return render(request,'user/login.html')
 
 def newRegistration(request):
   if request.user.is_authenticated:
@@ -46,17 +46,17 @@ def createSession(request):
   select_user = User.objects.filter(username=username)
 
   if not select_user:
-      messages.warning(request, "Account not found")
-      return redirect('home')
+    messages.warning(request, "Account not found")
+    return redirect('home')
 
   user = authenticate(request,username=username,password=password)
   if not user:
-      messages.error(request, "Incorrect password!!!")
-      return redirect('home')
+    messages.error(request, "Incorrect password!!!")
+    return redirect('home')
 
   login(request, user)
   return redirect('home')
 
 def user_logout(request):
-    logout(request)
-    return redirect('home')
+  logout(request)
+  return redirect('home')
