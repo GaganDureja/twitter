@@ -20,6 +20,7 @@
         <div class="post">
             <h6>{{ tweet.user.first_name }}</h6>
             <p>{{ tweet.tweet_message }}</p>
+            <a href="{% url 'tweet:readTweet' tweet.id %}">Read Tweet</a>
         </div>
     {% endfor %}
   </div>
