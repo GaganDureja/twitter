@@ -1,0 +1,8 @@
+{% extends "includes/base.html" %}
+{% block main_content %}
+  <h4>Tweets Details</h4>
+  <div class="post">
+      <h6>{{ tweet_details.user.first_name }}</h6>
+      <p>{{ tweet_details.tweet_message }}</p>
+  </div>
+{% endblock %}
