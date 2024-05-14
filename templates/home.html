@@ -2,7 +2,7 @@
 {% block main_content %}
   <div>
     <h4>Add a Tweet</h4>
-    <form method="post" action="{% url 'tweet:add_tweet' %}">
+    <form method="post" action="{% url 'tweet:createTweet' %}">
         {% csrf_token %}
         <div>
             <label>Tweet</label>
