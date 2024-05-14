@@ -5,4 +5,5 @@ app_name = 'tweet'
 
 urlpatterns = [
   path('create', views.createTweet, name='createTweet'),
+  path('read/<int:id>', views.readTweet, name='readTweet'),
 ]
