@@ -1,27 +1,36 @@
 {% extends "includes/base.html" %}
 {% block main_content %}
-  <div>
-    <h4>Add a Tweet</h4>
-    <form method="post" action="{% url 'tweet:createTweet' %}">
-        {% csrf_token %}
-        <div>
-            <label>Tweet</label>
-            <textarea type="text" name="tweet_message" rows="4" cols="90" maxlength="160" style="resize: none;" placeholder="Share what's in your mind (max characters 160)" required></textarea>
-        </div>
-        <div>
-            <input type="submit" value="Save">
-        </div>
-    </form>
-    <a href="{% url 'user:Logout' %}" style="float: right;">Logout</a>
+<div>
+  <h4>Add a Tweet</h4>
+  <form method="post" action="{% url 'tweet:createTweet' %}">
+    {% csrf_token %}
+    <div>
+      <label>Tweet</label>
+      <textarea
+        type="text"
+        name="tweet_message"
+        rows="4"
+        cols="90"
+        maxlength="160"
+        style="resize: none"
+        placeholder="Share what's in your mind (max characters 160)"
+        required
+      ></textarea>
+    </div>
+    <div>
+      <input type="submit" value="Save" />
+    </div>
+  </form>
+  <a href="{% url 'user:Logout' %}" style="float: right">Logout</a>
+</div>
+<div>
+  <h4>All Tweets</h4>
+  {% for tweet in all_tweets %}
+  <div class="tweet">
+    <h6>{{ tweet.user.first_name }}</h6>
+    <p>{{ tweet.tweet_message }}</p>
+    <a href="{% url 'tweet:readTweet' tweet.id %}">Read Tweet</a>
   </div>
-  <div>
-    <h4>All Tweets</h4>
-    {% for tweet in all_tweets %}
-        <div class="post">
-            <h6>{{ tweet.user.first_name }}</h6>
-            <p>{{ tweet.tweet_message }}</p>
-            <a href="{% url 'tweet:readTweet' tweet.id %}">Read Tweet</a>
-        </div>
-    {% endfor %}
-  </div>
+  {% endfor %}
+</div>
 {% endblock %}
