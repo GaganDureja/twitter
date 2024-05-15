@@ -34,3 +34,14 @@ input{
   background: #eaeaea6b;
   padding: 5px;
 }
+
+.pagination{
+  display: flex;
+  list-style: none;
+}
+.pagination li{
+  padding: 5px;
+  margin: 5px;
+  background-color: #b8b8b8;
+  border-radius: 5px;
+}
