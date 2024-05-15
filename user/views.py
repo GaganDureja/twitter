@@ -5,15 +5,22 @@ from django.contrib import messages
 from .models import User
 from django.http import Http404
 from tweet.models import Tweet
-
+from django.core.paginator import Paginator,PageNotAnInteger,EmptyPage
 
 
 
 def home(request):
-  if request.user.is_authenticated:
-    all_tweets = Tweet.objects.all().order_by('-id')
-    return render(request,'home.html', {'all_tweets': all_tweets})
-  return redirect('user:newSession')
+  if not request.user.is_authenticated:
+    return redirect('user:newSession')
+  all_tweets = Tweet.objects.all().order_by('-id')
+  page = request.GET.get('page', 1)
+  paginator = Paginator(all_tweets, 1)
+  try:
+    tweets = paginator.page(page)
+  except (PageNotAnInteger, EmptyPage):
+    tweets = paginator.page(1)
+  return render(request,'home.html', {'all_tweets': tweets})
+
 
 def newRegistration(request):
   if request.user.is_authenticated:

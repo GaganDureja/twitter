@@ -33,4 +33,15 @@
   </div>
   {% endfor %}
 </div>
+<div>
+  {% if all_tweets.paginator.num_pages > 1 %}
+    {% if all_tweets.has_previous %}
+      <li><a href="?page={{ all_tweets.previous_page_number }}">Previous</a></li>
+    {% endif %}
+    <li><a href="#" class="active">{{ all_tweets.number }}</a> </li>
+    {% if all_tweets.has_next %}
+      <li><a href="?page={{ all_tweets.next_page_number }}">Next</a></li>
+    {% endif %}
+  {% endif %}
+</div>
 {% endblock %}
