@@ -10,6 +10,6 @@ def createTweet(request):
   messages.success(request, "Tweet uploaded")
   return redirect('home')
 
-def readTweet(request,id):
+def showTweet(request,id):
   tweet_details = get_object_or_404(Tweet, id=id)
-  return render(request, 'tweet/tweet-detail.html',{'tweet_details':tweet_details})
+  return render(request, 'tweet/show.html',{'tweet_details':tweet_details})
