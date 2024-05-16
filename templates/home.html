@@ -2,7 +2,7 @@
 {% block main_content %}
 <div>
   <h4>Add a Tweet</h4>
-  <form method="post" action="{% url 'tweet:createTweet' %}">
+  <form method="post" action="{% url 'tweets:createTweet' %}">
     {% csrf_token %}
     <div>
       <label>Tweet</label>
@@ -29,7 +29,7 @@
   <div class="tweet">
     <h6>{{ tweet.user.first_name }}</h6>
     <p>{{ tweet.tweet_message }}</p>
-    <a href="{% url 'tweet:showTweet' tweet.id %}">Show Tweet</a>
+    <a href="{% url 'tweets:showTweet' tweet.id %}">Show Tweet</a>
   </div>
   {% endfor %}
 </div>

@@ -4,7 +4,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from .models import User
 from django.http import Http404
-from tweet.models import Tweet
+from tweets.models import Tweet
 from django.core.paginator import Paginator,PageNotAnInteger,EmptyPage
 
 
