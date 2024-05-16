@@ -12,4 +12,4 @@ def createTweet(request):
 
 def showTweet(request,id):
   tweet_details = get_object_or_404(Tweet, id=id)
-  return render(request, 'tweet/show.html',{'tweet_details':tweet_details})
+  return render(request, 'tweets/show.html',{'tweet_details':tweet_details})
