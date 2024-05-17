@@ -1,5 +1,49 @@
 {% extends "includes/base.html" %}
 {% block main_content %}
-  <div>Home Page</div>
-  <a href="{% url 'user:Logout' %}">Logout</a>
+<div>
+  <h4>Add a Tweet</h4>
+  <form method="post" action="{% url 'tweets:createTweet' %}">
+    {% csrf_token %}
+    <div>
+      <label>Tweet</label>
+      <textarea
+        type="text"
+        name="tweet_message"
+        rows="4"
+        cols="90"
+        maxlength="160"
+        style="resize: none"
+        placeholder="Share what's in your mind (max characters 160)"
+        required
+      ></textarea>
+    </div>
+    <div>
+      <input type="submit" value="Save" />
+    </div>
+  </form>
+  <a href="{% url 'user:Logout' %}" style="float: right">Logout</a>
+</div>
+<div>
+  <h4>All Tweets</h4>
+  {% for tweet in all_tweets %}
+  <div class="tweet">
+    <h6>{{ tweet.user.first_name }}</h6>
+    <p>{{ tweet.tweet_message }}</p>
+    <a href="{% url 'tweets:showTweet' tweet.id %}">Show Tweet</a>
+  </div>
+  {% endfor %}
+</div>
+<div>
+  {% if all_tweets.paginator.num_pages > 1 %}
+    <ul class="pagination">
+      {% if all_tweets.has_previous %}
+        <li><a href="?page={{ all_tweets.previous_page_number }}">Previous</a></li>
+      {% endif %}
+      <li><a href="#" class="active">{{ all_tweets.number }}</a> </li>
+      {% if all_tweets.has_next %}
+        <li><a href="?page={{ all_tweets.next_page_number }}">Next</a></li>
+      {% endif %}
+    </ul>
+  {% endif %}
+</div>
 {% endblock %}
