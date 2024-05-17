@@ -14,7 +14,7 @@ def home(request):
     return redirect('user:newSession')
   all_tweets = Tweet.objects.all().order_by('-id')
   page = request.GET.get('page', 1)
-  paginator = Paginator(all_tweets, 1)
+  paginator = Paginator(all_tweets, 10)
   try:
     tweets = paginator.page(page)
   except (PageNotAnInteger, EmptyPage):
