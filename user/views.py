@@ -10,8 +10,6 @@ from django.core.paginator import Paginator,PageNotAnInteger,EmptyPage
 
 
 def home(request):
-  if not request.user.is_authenticated:
-    return redirect('user:newSession')
   all_tweets = Tweet.objects.all().order_by('-id')
   page = request.GET.get('page', 1)
   paginator = Paginator(all_tweets, 10)
