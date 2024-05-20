@@ -35,7 +35,8 @@
     <p>{{ tweet.tweet_message }}</p>
     <a href="{% url 'tweets:showTweet' tweet.id %}">Show Tweet</a>
     {% if request.user ==  tweet.user %}
-      <a href="{% url 'tweets:editTweet' tweet.id %}" style="float: right">Edit Tweet</a>
+      <a href="{% url 'tweets:editTweet' tweet.id %}" style="margin-left: 20px;">Edit Tweet</a>
+      <a href="{% url 'tweets:destroyTweet' tweet.id %}" style="float: right">Delete Tweet</a>
     {% endif %}
   </div>
   {% endfor %}
