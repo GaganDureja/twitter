@@ -30,3 +30,12 @@ def updateTweet(request,id):
   tweet_details.save()
   messages.success(request, "Tweet updated")
   return redirect('home')
+
+def destroyTweet(request,id):
+  tweet_details = get_object_or_404(Tweet, id=id)
+  if request.user != tweet_details.user:
+    messages.error(request, "Invalid path")
+    return redirect('home')
+  tweet_details.delete()
+  messages.success(request, "Tweet deleted")
+  return redirect('home')
