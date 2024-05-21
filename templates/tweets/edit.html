@@ -3,7 +3,7 @@
 <div>
   <a href="{% url 'home' %}" style="float: right">Home</a>
   <h4>Edit Tweet</h4>
-  <form method="post" action="{% url 'tweets:updateTweet' tweet_details.id %}">
+  <form method="post" action="{% url 'tweets:updateTweet' tweet.id %}">
     {% csrf_token %}
     <div>
       <label>Tweet</label>
@@ -16,7 +16,7 @@
         style="resize: none"
         placeholder="Share what's in your mind (max characters 160)"
         required
-      >{{ tweet_details.tweet_message }}</textarea>
+      >{{ tweet.tweet_message }}</textarea>
     </div>
     <div>
       <input type="submit" value="Update" />

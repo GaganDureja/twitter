@@ -3,7 +3,7 @@
 <a href="{% url 'home' %}" style="float: right">Home</a>
 <h4>Tweets Details</h4>
 <div class="tweet">
-  <h6>{{ tweet_details.user.first_name }}</h6>
-  <p>{{ tweet_details.tweet_message }}</p>
+  <h6>{{ tweet.user.first_name }}</h6>
+  <p>{{ tweet.tweet_message }}</p>
 </div>
 {% endblock %}
