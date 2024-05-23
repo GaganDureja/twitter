@@ -9,4 +9,5 @@ urlpatterns = [
   path('edit/<int:id>', views.editTweet, name='editTweet'),
   path('update/<int:id>', views.updateTweet, name='updateTweet'),
   path('destroy/<int:id>', views.destroyTweet, name='destroyTweet'),
+  path('retweet/<int:id>', views.reTweet, name='reTweet')
 ]
