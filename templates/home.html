@@ -32,7 +32,13 @@
   {% for tweet in all_tweets %}
   <div class="tweet">
     <h6>{{ tweet.user.first_name }}</h6>
-    <p>{{ tweet.tweet_message }}</p>
+    {% if tweet.retweet is None %}
+      <p>{{ tweet.tweet_message }}</p>
+    {% else %}
+      <p>Retweeted</p>
+      <h6>{{ tweet.retweet.user.first_name }}</h6>
+      <p>{{ tweet.retweet.tweet_message }}</p>
+    {% endif %}
     <a href="{% url 'tweets:showTweet' tweet.id %}">Show Tweet</a>
     {% if request.user.id ==  tweet.user_id and tweet.retweet is None %}
       <a href="{% url 'tweets:editTweet' tweet.id %}" style="margin-left: 20px;">Edit Tweet</a>
@@ -40,7 +46,7 @@
     {% if request.user.id ==  tweet.user_id %}
       <a href="{% url 'tweets:destroyTweet' tweet.id %}" style="float: right">Delete Tweet</a>
     {% endif %}
-    {% if request.user.id !=  tweet.user_id and request.user.is_authenticated %}
+    {% if request.user.id !=  tweet.user_id and request.user.is_authenticated and tweet.retweet is None %}
       <a href="{% url 'tweets:reTweet' tweet.id %}" style="margin-left: 20px;">ReTweet</a>
     {% endif %}
   </div>
