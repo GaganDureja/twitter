@@ -34,8 +34,10 @@
     <h6>{{ tweet.user.first_name }}</h6>
     <p>{{ tweet.tweet_message }}</p>
     <a href="{% url 'tweets:showTweet' tweet.id %}">Show Tweet</a>
-    {% if request.user.id ==  tweet.user_id %}
+    {% if request.user.id ==  tweet.user_id and tweet.retweet is None %}
       <a href="{% url 'tweets:editTweet' tweet.id %}" style="margin-left: 20px;">Edit Tweet</a>
+    {% endif %}
+    {% if request.user.id ==  tweet.user_id %}
       <a href="{% url 'tweets:destroyTweet' tweet.id %}" style="float: right">Delete Tweet</a>
     {% else %}
       <a href="{% url 'tweets:reTweet' tweet.id %}" style="margin-left: 20px;">ReTweet</a>
