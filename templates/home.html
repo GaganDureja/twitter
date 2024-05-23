@@ -37,6 +37,8 @@
     {% if request.user.id ==  tweet.user_id %}
       <a href="{% url 'tweets:editTweet' tweet.id %}" style="margin-left: 20px;">Edit Tweet</a>
       <a href="{% url 'tweets:destroyTweet' tweet.id %}" style="float: right">Delete Tweet</a>
+    {% else %}
+      <a href="{% url 'tweets:reTweet' tweet.id %}" style="margin-left: 20px;">ReTweet</a>
     {% endif %}
   </div>
   {% endfor %}
