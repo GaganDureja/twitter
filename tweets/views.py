@@ -11,5 +11,22 @@ def createTweet(request):
   return redirect('home')
 
 def showTweet(request,id):
-  tweet_details = get_object_or_404(Tweet, id=id)
-  return render(request, 'tweets/show.html',{'tweet_details':tweet_details})
+  tweet = get_object_or_404(Tweet, id=id)
+  return render(request, 'tweets/show.html',{'tweet':tweet})
+
+def editTweet(request,id):
+  tweet = get_object_or_404(Tweet, id=id, user_id=request.user.id)
+  return render(request, 'tweets/edit.html',{'tweet':tweet})
+
+def updateTweet(request,id):
+  tweet = get_object_or_404(Tweet, id=id, user_id=request.user.id)
+  tweet.tweet_message = request.POST.get('tweet_message')
+  tweet.save()
+  messages.success(request, "Tweet updated")
+  return redirect('home')
+
+def destroyTweet(request,id):
+  tweet = get_object_or_404(Tweet, id=id, user_id=request.user.id)
+  tweet.delete()
+  messages.success(request, "Tweet deleted")
+  return redirect('home')
