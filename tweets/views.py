@@ -15,11 +15,11 @@ def showTweet(request,id):
   return render(request, 'tweets/show.html',{'tweet':tweet})
 
 def editTweet(request,id):
-  tweet = get_object_or_404(Tweet, id=id, user_id=request.user.id)
+  tweet = get_object_or_404(Tweet, id=id, user_id=request.user.id, retweet__isnull=True)
   return render(request, 'tweets/edit.html',{'tweet':tweet})
 
 def updateTweet(request,id):
-  tweet = get_object_or_404(Tweet, id=id, user_id=request.user.id)
+  tweet = get_object_or_404(Tweet, id=id, user_id=request.user.id, retweet__isnull=True)
   tweet.tweet_message = request.POST.get('tweet_message')
   tweet.save()
   messages.success(request, "Tweet updated")
