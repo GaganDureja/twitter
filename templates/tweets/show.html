@@ -4,6 +4,12 @@
 <h4>Tweets Details</h4>
 <div class="tweet">
   <h6>{{ tweet.user.first_name }}</h6>
-  <p>{{ tweet.tweet_message }}</p>
+  {% if tweet.retweet is None %}
+    <p>{{ tweet.tweet_message }}</p>
+  {% else %}
+    <p>Retweeted</p>
+    <h6>{{ tweet.retweet.user.first_name }}</h6>
+    <p>{{ tweet.retweet.tweet_message }}</p>
+  {% endif %}
 </div>
 {% endblock %}
