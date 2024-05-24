@@ -15,11 +15,11 @@ def showTweet(request,id):
   return render(request, 'tweets/show.html',{'tweet':tweet})
 
 def editTweet(request,id):
-  tweet = get_object_or_404(Tweet, id=id, user_id=request.user.id, retweet__isnull=True)
+  tweet = get_object_or_404(Tweet, id=id, user_id=request.user.id, original_tweet__isnull=True)
   return render(request, 'tweets/edit.html',{'tweet':tweet})
 
 def updateTweet(request,id):
-  tweet = get_object_or_404(Tweet, id=id, user_id=request.user.id, retweet__isnull=True)
+  tweet = get_object_or_404(Tweet, id=id, user_id=request.user.id, original_tweet__isnull=True)
   tweet.tweet_message = request.POST.get('tweet_message')
   tweet.save()
   messages.success(request, "Tweet updated")
@@ -35,6 +35,6 @@ def reTweet(request,id):
   tweet = get_object_or_404(Tweet, id=id)
   if request.user.id==tweet.user_id:
     messages.error(request,'Invalid path')
-  Tweet.objects.create(user = request.user, retweet = tweet)
+  Tweet.objects.create(user = request.user, original_tweet = tweet)
   messages.success(request, "Tweet Retweeted")
   return redirect('home')
