@@ -23,7 +23,7 @@ def updateTweet(request,id):
   tweet.tweet_message = request.POST.get('tweet_message')
   tweet.save()
   messages.success(request, "Tweet updated")
-  return redirect('home')
+  return redirect('tweets:showTweet', id=id)
 
 def destroyTweet(request,id):
   tweet = get_object_or_404(Tweet, id=id, user_id=request.user.id)
