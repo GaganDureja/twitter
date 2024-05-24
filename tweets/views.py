@@ -1,4 +1,4 @@
-from django.shortcuts import redirect,render, get_object_or_404
+from django.shortcuts import redirect,render, get_object_or_404,HttpResponse
 from .models import Tweet
 from django.contrib import messages
 
@@ -15,11 +15,15 @@ def showTweet(request,id):
   return render(request, 'tweets/show.html',{'tweet':tweet})
 
 def editTweet(request,id):
-  tweet = get_object_or_404(Tweet, id=id, user_id=request.user.id, original_tweet__isnull=True)
+  tweet = get_object_or_404(Tweet, id=id, user_id=request.user.id)
+  if tweet.original_tweet is not None:
+   return HttpResponse("Unprocessable Tweet", status=422)
   return render(request, 'tweets/edit.html',{'tweet':tweet})
 
 def updateTweet(request,id):
-  tweet = get_object_or_404(Tweet, id=id, user_id=request.user.id, original_tweet__isnull=True)
+  tweet = get_object_or_404(Tweet, id=id, user_id=request.user.id)
+  if tweet.original_tweet is not None:
+   return HttpResponse("Unprocessable Tweet", status=422)
   tweet.tweet_message = request.POST.get('tweet_message')
   tweet.save()
   messages.success(request, "Tweet updated")
