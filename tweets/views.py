@@ -34,7 +34,7 @@ def destroyTweet(request,id):
 def reTweet(request,id):
   tweet = get_object_or_404(Tweet, id=id)
   if request.user.id==tweet.user_id:
-    messages.error(request,'Invalid path')
+    messages.error(request,'Cannot Retweet self Tweet')
   Tweet.objects.create(user = request.user, original_tweet = tweet)
   messages.success(request, "Tweet Retweeted")
   return redirect('home')
