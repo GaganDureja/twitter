@@ -17,13 +17,13 @@ def showTweet(request,id):
 def editTweet(request,id):
   tweet = get_object_or_404(Tweet, id=id, user_id=request.user.id)
   if tweet.original_tweet is not None:
-   return HttpResponse("Unprocessable Tweet", status=422)
+   return HttpResponse("Retweets can't be retweeted", status=422)
   return render(request, 'tweets/edit.html',{'tweet':tweet})
 
 def updateTweet(request,id):
   tweet = get_object_or_404(Tweet, id=id, user_id=request.user.id)
   if tweet.original_tweet is not None:
-   return HttpResponse("Unprocessable Tweet", status=422)
+   return HttpResponse("Retweets can't be retweeted", status=422)
   tweet.tweet_message = request.POST.get('tweet_message')
   tweet.save()
   messages.success(request, "Tweet updated")
