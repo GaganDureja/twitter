@@ -1,5 +1,6 @@
 {% extends "includes/base.html" %}
 {% block main_content %}
+{% load tweet_tags %}
 {% if request.user.is_authenticated %}
   <div>
     <h4>Add a Tweet</h4>
@@ -40,13 +41,13 @@
       <p>{{ tweet.original_tweet.tweet_message }}</p>
     {% endif %}
     <a href="{% url 'tweets:showTweet' tweet.id %}">Show Tweet</a>
-    {% if request.user.id ==  tweet.user_id and tweet.original_tweet is None %}
+    {% if request.user|can_edit_tweet:tweet %}
       <a href="{% url 'tweets:editTweet' tweet.id %}" style="margin-left: 20px;">Edit Tweet</a>
     {% endif %}
-    {% if request.user.id ==  tweet.user_id %}
+    {% if request.user|can_delete_tweet:tweet %}
       <a href="{% url 'tweets:destroyTweet' tweet.id %}" style="float: right">Delete Tweet</a>
     {% endif %}
-    {% if request.user.id !=  tweet.user_id and request.user.is_authenticated and tweet.original_tweet is None %}
+    {% if request.user|can_retweet:tweet %}
       <a href="{% url 'tweets:reTweet' tweet.id %}" style="margin-left: 20px;">ReTweet</a>
     {% endif %}
   </div>
