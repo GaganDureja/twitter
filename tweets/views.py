@@ -4,7 +4,7 @@ from django.contrib import messages
 from django.views import View
 
 # Create your views here.
-class TweetView(View):
+class TweetsViews(View):
   def dispatch(self, request, *args, **kwargs):
     action = kwargs.pop('action', None)
     if action and hasattr(self, action):
