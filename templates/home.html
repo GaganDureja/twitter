@@ -47,9 +47,6 @@
     {% if request.user|can_delete_tweet:tweet %}
       <a href="{% url 'tweets:destroyTweet' tweet.id %}" style="float: right">Delete Tweet</a>
     {% endif %}
-    {% if request.user|can_retweet:tweet %}
-      <a href="{% url 'tweets:reTweet' tweet.id %}" style="margin-left: 20px;">ReTweet</a>
-    {% endif %}
   </div>
   {% endfor %}
 </div>

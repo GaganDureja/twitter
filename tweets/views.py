@@ -42,11 +42,3 @@ class TweetsViews(View):
     tweet.delete()
     messages.success(request, "Tweet deleted")
     return redirect('home')
-
-  def reTweet(self, request, id):
-    tweet = get_object_or_404(Tweet, id=id)
-    if request.user.id==tweet.user_id:
-      messages.error(request,'Cannot Retweet self Tweet')
-    Tweet.objects.create(user = request.user, original_tweet = tweet)
-    messages.success(request, "Tweet Retweeted")
-    return redirect('home')
