@@ -1,32 +1,44 @@
-from django.shortcuts import redirect,render, get_object_or_404
+from django.shortcuts import redirect,render, get_object_or_404,HttpResponse
 from .models import Tweet
 from django.contrib import messages
-
+from django.views import View
 
 # Create your views here.
-def createTweet(request):
-  tweet_message = request.POST.get('tweet_message')
-  Tweet.objects.create(user = request.user, tweet_message = tweet_message)
-  messages.success(request, "Tweet uploaded")
-  return redirect('home')
+class TweetsViews(View):
+  def dispatch(self, request, *args, **kwargs):
+    action = kwargs.pop('action', None)
+    if action and hasattr(self, action):
+      handler = getattr(self, action)
+      return handler(request, *args, **kwargs)
+    return super().dispatch(request, *args, **kwargs)
 
-def showTweet(request,id):
-  tweet = get_object_or_404(Tweet, id=id)
-  return render(request, 'tweets/show.html',{'tweet':tweet})
+  def create(self, request):
+    tweet_message = request.POST.get('tweet_message')
+    Tweet.objects.create(user = request.user, tweet_message = tweet_message)
+    messages.success(request, "Tweet uploaded")
+    return redirect('home')
 
-def editTweet(request,id):
-  tweet = get_object_or_404(Tweet, id=id, user_id=request.user.id)
-  return render(request, 'tweets/edit.html',{'tweet':tweet})
+  def show(self, request, id):
+    tweet = get_object_or_404(Tweet, id=id)
+    return render(request, 'tweets/show.html',{'tweet':tweet})
 
-def updateTweet(request,id):
-  tweet = get_object_or_404(Tweet, id=id, user_id=request.user.id)
-  tweet.tweet_message = request.POST.get('tweet_message')
-  tweet.save()
-  messages.success(request, "Tweet updated")
-  return redirect('home')
+  def edit(self, request, id):
+    tweet = get_object_or_404(Tweet, id=id, user_id=request.user.id)
+    if tweet.original_tweet is not None:
+      return HttpResponse("Retweets can't be retweeted", status=422)
+    return render(request, 'tweets/edit.html',{'tweet':tweet})
 
-def destroyTweet(request,id):
-  tweet = get_object_or_404(Tweet, id=id, user_id=request.user.id)
-  tweet.delete()
-  messages.success(request, "Tweet deleted")
-  return redirect('home')
+  def update(self, request, id):
+    tweet = get_object_or_404(Tweet, id=id, user_id=request.user.id)
+    if tweet.original_tweet is not None:
+      return HttpResponse("Retweets can't be retweeted", status=422)
+    tweet.tweet_message = request.POST.get('tweet_message')
+    tweet.save()
+    messages.success(request, "Tweet updated")
+    return redirect('tweets:showTweet', id=id)
+
+  def destroy(self, request, id):
+    tweet = get_object_or_404(Tweet, id=id, user_id=request.user.id)
+    tweet.delete()
+    messages.success(request, "Tweet deleted")
+    return redirect('home')
