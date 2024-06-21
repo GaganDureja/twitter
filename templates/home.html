@@ -47,6 +47,12 @@
     {% if request.user|can_delete_tweet:tweet %}
       <a href="{% url 'tweets:destroyTweet' tweet.id %}" style="float: right">Delete Tweet</a>
     {% endif %}
+    {% if request.user|can_retweet:tweet %}
+      <form method="post" action="{% url 'tweets:reTweet' original_tweet_id=tweet.id %}" style="display: inline;">
+        {% csrf_token %}
+        <button type="submit" style="margin-left: 20px;">Retweet</button>
+      </form>
+    {% endif %}
   </div>
   {% endfor %}
 </div>
