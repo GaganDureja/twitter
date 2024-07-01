@@ -9,5 +9,5 @@ urlpatterns = [
   path('edit/<int:id>/', tweets_views.TweetsViews.as_view(), {'action': 'edit'}, name='editTweet'),
   path('update/<int:id>/', tweets_views.TweetsViews.as_view(), {'action': 'update'}, name='updateTweet'),
   path('destroy/<int:id>/', tweets_views.TweetsViews.as_view(), {'action': 'destroy'}, name='destroyTweet'),
-  path('<int:original_tweet_id>/retweet/', retweets_views.RetweetView.as_view(), name='reTweet'),
+  path('<int:original_tweet_id>/retweet/', retweets_views.RetweetView.as_view(http_method_names=['post']), name='reTweet'),
 ]
