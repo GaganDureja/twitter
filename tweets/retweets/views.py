@@ -9,6 +9,6 @@ class RetweetView(View):
     tweet = get_object_or_404(Tweet, id=original_tweet_id)
     if request.user.id==tweet.user_id:
       messages.error(request,'Cannot Retweet self Tweet')
-    Tweet.objects.create(user = request.user, original_tweet = tweet)
+    Tweet.objects.create(user = request.user, original_tweet = tweet, tweet_message = tweet.tweet_message)
     messages.success(request, "Tweet Retweeted")
     return redirect('home')
