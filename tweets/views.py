@@ -34,7 +34,7 @@ class TweetsViews(View):
     if tweet.original_tweet is not None:
       return HttpResponse("Retweets can't be retweeted", status=422)
     tweet.tweet_message = request.POST.get('tweet_message')
-    tweet.updated_at = timezone.now()
+    tweet.last_edited_at = timezone.now()
     tweet.save()
     messages.success(request, "Tweet updated")
     return redirect('tweets:showTweet', id=id)

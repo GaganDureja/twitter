@@ -33,7 +33,7 @@
   {% for tweet in all_tweets %}
   <div class="tweet">
     <h6>{{ tweet.user.first_name }}</h6>
-    {% if tweet.updated_at %}
+    {% if tweet.last_edited_at %}
       <p>edited</p>
     {% endif %}
     {% if tweet.original_tweet is None %}
