@@ -4,7 +4,12 @@ register = template.Library()
 
 @register.filter
 def can_edit_tweet(user, tweet):
-  return user.id == tweet.user_id and tweet.original_tweet_id is None
+  if user.id != tweet.user_id:
+    return False
+  if tweet.original_tweet_id is not None:
+    return False
+  return True
+  # return user.id == tweet.user_id and tweet.original_tweet_id is None
 
 @register.filter
 def can_delete_tweet(user, tweet):
@@ -12,4 +17,11 @@ def can_delete_tweet(user, tweet):
 
 @register.filter
 def can_retweet(user, tweet):
-  return user.id != tweet.user_id and user.is_authenticated and tweet.original_tweet_id is None
+  if tweet.original_tweet_id is None:
+    return False
+  if not user.is_authenticated:
+    return False
+  if user.id == tweet.user_id:
+    return False
+  return True
+  # return user.id != tweet.user_id and user.is_authenticated and tweet.original_tweet_id is None
