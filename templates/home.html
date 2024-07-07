@@ -36,7 +36,7 @@
     {% if tweet.last_edited_at %}
       <p>edited</p>
     {% endif %}
-    {% if tweet.original_tweet is None %}
+    {% if tweet.original_tweet_id is None %}
       <p>{{ tweet.tweet_message }}</p>
     {% else %}
       <p>Retweeted</p>
