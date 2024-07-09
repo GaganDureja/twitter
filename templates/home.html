@@ -43,13 +43,13 @@
       <h6>{{ tweet.original_tweet.user.first_name }}</h6>
       <p>{{ tweet.original_tweet.tweet_message }}</p>
     {% endif %}
-    <a href="{% url 'tweets:DetailTweet' tweet.id %}">Show Tweet</a>
+    <a href="{% url 'tweets:ManageTweet' tweet.id %}">Show Tweet</a>
     {% if request.user|can_edit_tweet:tweet %}
       <a href="{% url 'tweets:editTweet' tweet.id %}" style="margin-left: 20px;">Edit Tweet</a>
     {% endif %}
     {% if request.user|can_delete_tweet:tweet %}
       <a href="javascript:void(0)" onclick="deleteTweet('{{tweet.id}}')" style="float: right">Delete Tweet</a>
-      <!-- href="{% url 'tweets:DetailTweet' tweet.id %}" -->
+      <!-- href="{% url 'tweets:ManageTweet' tweet.id %}" -->
     {% endif %}
     {% if request.user|can_retweet:tweet %}
       <form method="post" action="{% url 'tweets:reTweet' original_tweet_id=tweet.id %}" style="display: inline;">
@@ -78,7 +78,7 @@
 {% block specific_js %}
   <script>
     function deleteTweet(id) {
-      fetch(`{% url 'tweets:DetailTweet' 0 %}`.replace('0',id), {
+      fetch(`{% url 'tweets:ManageTweet' 0 %}`.replace('0',id), {
         method: 'DELETE',
         headers: {
           'X-CSRFToken': '{{ csrf_token }}',

@@ -5,7 +5,7 @@ app_name = 'tweets'
 
 urlpatterns = [
   path('', tweets_views.TweetsViews.as_view(), name='ListCreateTweets'),
-  path('<int:id>', tweets_views.TweetDetailViews.as_view(), name='DetailTweet'),
+  path('<int:id>', tweets_views.TweetDetailViews.as_view(), name='ManageTweet'),
   path('<int:id>/edit', tweets_views.TweetDetailViews.as_view(), {'action': 'edit'}, name='editTweet'),
   # path('create/', tweets_views.TweetsViews.as_view(), {'action': 'create'}, name='createTweet'),
   # path('show/<int:id>/', tweets_views.TweetsViews.as_view(), {'action': 'show'}, name='showTweet'),

@@ -50,7 +50,7 @@ class TweetDetailViews(View):
     tweet.last_edited_at = timezone.now()
     tweet.save()
     messages.success(request, "Tweet updated")
-    return redirect('tweets:DetailTweet', id=id)
+    return redirect('tweets:ManageTweet', id=id)
 
   def delete(self, request, id):
     tweet = get_object_or_404(Tweet, id=id, user_id=request.user.id)
