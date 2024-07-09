@@ -17,7 +17,7 @@ def can_delete_tweet(user, tweet):
 
 @register.filter
 def can_retweet(user, tweet):
-  if tweet.original_tweet_id is None:
+  if tweet.original_tweet_id is not None:
     return False
   if not user.is_authenticated:
     return False
