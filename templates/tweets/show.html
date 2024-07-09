@@ -4,6 +4,9 @@
 <h4>Tweets Details</h4>
 <div class="tweet">
   <h6>{{ tweet.user.first_name }}</h6>
+  {% if tweet.last_edited_at %}
+    <p>edited</p>
+  {% endif %}
   {% if tweet.original_tweet is None %}
     <p>{{ tweet.tweet_message }}</p>
   {% else %}
