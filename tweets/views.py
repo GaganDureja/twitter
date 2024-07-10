@@ -43,7 +43,7 @@ class TweetDetailViews(View):
       return HttpResponse("Retweets can't be retweeted", status=422)
     return render(request, 'tweets/edit.html',{'tweet':tweet})
 
-  def put(self, request, id):
+  def patch(self, request, id):
     tweet = get_object_or_404(Tweet, id=id, user_id=request.user.id)
     if tweet.original_tweet is not None:
       return HttpResponse("Retweets can't be retweeted", status=422)

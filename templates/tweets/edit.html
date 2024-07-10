@@ -28,7 +28,7 @@
     function updateTweet() {
       tweetNewMessage = document.getElementsByName('tweet_message')[0].value;
       fetch(`{% url 'tweets:ManageTweet' tweet.id %}`, {
-        method: 'PUT',
+        method: 'PATCH',
         headers: {
           'X-CSRFToken': '{{ csrf_token }}',
         },
