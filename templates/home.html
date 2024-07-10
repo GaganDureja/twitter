@@ -48,7 +48,7 @@
       <a href="{% url 'tweets:editTweet' tweet.id %}" style="margin-left: 20px;">Edit Tweet</a>
     {% endif %}
     {% if request.user|can_delete_tweet:tweet %}
-      <a href="javascript:void(0)" onclick="deleteTweet('{{tweet.id}}')" style="float: right">Delete Tweet</a>
+      <a href="javascript:void(0)" onclick="deleteData('{% url 'tweets:ManageTweet' tweet.id %}')" style="float: right">Delete Tweet</a>
       <!-- href="{% url 'tweets:ManageTweet' tweet.id %}" -->
     {% endif %}
     {% if request.user|can_retweet:tweet %}
@@ -77,8 +77,8 @@
 
 {% block specific_js %}
   <script>
-    function deleteTweet(id) {
-      fetch(`{% url 'tweets:ManageTweet' 0 %}`.replace('0',id), {
+    function deleteData(url) {
+      fetch(url, {
         method: 'DELETE',
         headers: {
           'X-CSRFToken': '{{ csrf_token }}',
