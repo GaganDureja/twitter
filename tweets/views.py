@@ -5,6 +5,7 @@ from django.views import View
 from django.utils import timezone
 from django.core.paginator import Paginator,PageNotAnInteger,EmptyPage
 from django.http import JsonResponse
+import json
 
 # Create your views here.
 class TweetsViews(View):
@@ -42,15 +43,17 @@ class TweetDetailViews(View):
       return HttpResponse("Retweets can't be retweeted", status=422)
     return render(request, 'tweets/edit.html',{'tweet':tweet})
 
-  def post(self, request, id):
+  def put(self, request, id):
     tweet = get_object_or_404(Tweet, id=id, user_id=request.user.id)
     if tweet.original_tweet is not None:
       return HttpResponse("Retweets can't be retweeted", status=422)
-    tweet.tweet_message = request.POST.get('tweet_message')
+    # tweet.tweet_message = request.POST.get('tweet_message')
+    tweet.tweet_message = json.loads(request.body).get('tweet_message')
     tweet.last_edited_at = timezone.now()
     tweet.save()
     messages.success(request, "Tweet updated")
-    return redirect('tweets:ManageTweet', id=id)
+    return JsonResponse({'status': 'success'})
+    # return redirect('tweets:ManageTweet', id=id)
 
   def delete(self, request, id):
     tweet = get_object_or_404(Tweet, id=id, user_id=request.user.id)
