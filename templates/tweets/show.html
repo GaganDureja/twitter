@@ -3,7 +3,9 @@
 <a href="{% url 'home' %}" style="float: right">Home</a>
 <h4>Tweets Details</h4>
 <div class="tweet">
-  <h6>{{ tweet.user.first_name }}</h6>
+  <a href="{% url 'user:UserDetails' tweet.user.id %}">
+    <h6>{{ tweet.user.first_name }}</h6>
+  </a>
   {% if tweet.last_edited_at %}
     <p>edited</p>
   {% endif %}
@@ -11,7 +13,9 @@
     <p>{{ tweet.tweet_message }}</p>
   {% else %}
     <p>Retweeted</p>
-    <h6>{{ tweet.original_tweet.user.first_name }}</h6>
+    <a href="{% url 'user:UserDetails' tweet.original_tweet.user.id %}">
+      <h6>{{ tweet.original_tweet.user.first_name }}</h6>
+    </a>
     <p>{{ tweet.original_tweet.tweet_message }}</p>
   {% endif %}
 </div>
