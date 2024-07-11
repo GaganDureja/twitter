@@ -22,12 +22,12 @@ def home(request):
 class UserViews(View):
   def get(self, request, id):
     user = get_object_or_404(User, id=id)
-    return render(request, 'user/show.html',{'user':user})
+    return render(request, 'users/show.html',{'user':user})
 
 def newRegistration(request):
   if request.user.is_authenticated:
     return redirect('home')
-  return render(request,'user/register.html')
+  return render(request,'users/register.html')
 
 def createRegistration(request):
   if request.method != 'POST':
@@ -49,7 +49,7 @@ def createRegistration(request):
 def newSession(request):
   if request.user.is_authenticated:
     return redirect('home')
-  return render(request,'user/login.html')
+  return render(request,'users/login.html')
 
 def createSession(request):
   if request.method != 'POST':
