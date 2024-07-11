@@ -4,7 +4,7 @@
 {% if request.user.is_authenticated %}
   <div>
     <h4>Add a Tweet</h4>
-    <form method="post" action="{% url 'tweets:createTweet' %}">
+    <form method="post" action="{% url 'tweets:ListCreateTweets' %}">
       {% csrf_token %}
       <div>
         <label>Tweet</label>
@@ -33,19 +33,29 @@
   {% for tweet in all_tweets %}
   <div class="tweet">
     <h6>{{ tweet.user.first_name }}</h6>
-    {% if tweet.original_tweet is None %}
+    {% if tweet.last_edited_at %}
+      <p>edited</p>
+    {% endif %}
+    {% if tweet.original_tweet_id is None %}
       <p>{{ tweet.tweet_message }}</p>
     {% else %}
       <p>Retweeted</p>
       <h6>{{ tweet.original_tweet.user.first_name }}</h6>
       <p>{{ tweet.original_tweet.tweet_message }}</p>
     {% endif %}
-    <a href="{% url 'tweets:showTweet' tweet.id %}">Show Tweet</a>
+    <a href="{% url 'tweets:ManageTweet' tweet.id %}">Show Tweet</a>
     {% if request.user|can_edit_tweet:tweet %}
       <a href="{% url 'tweets:editTweet' tweet.id %}" style="margin-left: 20px;">Edit Tweet</a>
     {% endif %}
     {% if request.user|can_delete_tweet:tweet %}
-      <a href="{% url 'tweets:destroyTweet' tweet.id %}" style="float: right">Delete Tweet</a>
+      <a href="javascript:void(0)" onclick="deleteData('{% url 'tweets:ManageTweet' tweet.id %}')" style="float: right">Delete Tweet</a>
+      <!-- href="{% url 'tweets:ManageTweet' tweet.id %}" -->
+    {% endif %}
+    {% if request.user|can_retweet:tweet %}
+      <form method="post" action="{% url 'tweets:reTweet' original_tweet_id=tweet.id %}" style="display: inline;">
+        {% csrf_token %}
+        <button type="submit" style="margin-left: 20px;">Retweet</button>
+      </form>
     {% endif %}
   </div>
   {% endfor %}
@@ -63,4 +73,25 @@
     </ul>
   {% endif %}
 </div>
+{% endblock %}
+
+{% block specific_js %}
+  <script>
+    function deleteData(url) {
+      fetch(url, {
+        method: 'DELETE',
+        headers: {
+          'X-CSRFToken': '{{ csrf_token }}',
+        }
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.status === 'success') {
+          window.location.reload();
+        }else{
+          alert('Error deleting tweet');
+        }
+      });
+    }
+  </script>
 {% endblock %}
