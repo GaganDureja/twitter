@@ -7,10 +7,5 @@ urlpatterns = [
   path('', tweets_views.TweetsViews.as_view(), name='ListCreateTweets'),
   path('<int:id>', tweets_views.TweetDetailViews.as_view(), name='ManageTweet'),
   path('<int:id>/edit', tweets_views.TweetDetailViews.as_view(), {'action': 'edit'}, name='editTweet'),
-  # path('create/', tweets_views.TweetsViews.as_view(), {'action': 'create'}, name='createTweet'),
-  # path('show/<int:id>/', tweets_views.TweetsViews.as_view(), {'action': 'show'}, name='showTweet'),
-  # path('edit/<int:id>/', tweets_views.TweetsViews.as_view(), {'action': 'edit'}, name='editTweet'),
-  # path('update/<int:id>/', tweets_views.TweetsViews.as_view(), {'action': 'update'}, name='updateTweet'),
-  # path('destroy/<int:id>/', tweets_views.TweetsViews.as_view(), {'action': 'destroy'}, name='destroyTweet'),
   path('<int:original_tweet_id>/retweet/', retweets_views.RetweetView.as_view(http_method_names=['post']), name='reTweet'),
 ]

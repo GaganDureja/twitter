@@ -9,7 +9,6 @@ def can_edit_tweet(user, tweet):
   if tweet.original_tweet_id is not None:
     return False
   return True
-  # return user.id == tweet.user_id and tweet.original_tweet_id is None
 
 @register.filter
 def can_delete_tweet(user, tweet):
@@ -24,4 +23,3 @@ def can_retweet(user, tweet):
   if user.id == tweet.user_id:
     return False
   return True
-  # return user.id != tweet.user_id and user.is_authenticated and tweet.original_tweet_id is None

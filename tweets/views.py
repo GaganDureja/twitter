@@ -47,17 +47,14 @@ class TweetDetailViews(View):
     tweet = get_object_or_404(Tweet, id=id, user_id=request.user.id)
     if tweet.original_tweet is not None:
       return HttpResponse("Retweets can't be retweeted", status=422)
-    # tweet.tweet_message = request.POST.get('tweet_message')
     tweet.tweet_message = json.loads(request.body).get('tweet_message')
     tweet.last_edited_at = timezone.now()
     tweet.save()
     messages.success(request, "Tweet updated")
     return JsonResponse({'status': 'success'})
-    # return redirect('tweets:ManageTweet', id=id)
 
   def delete(self, request, id):
     tweet = get_object_or_404(Tweet, id=id, user_id=request.user.id)
     tweet.delete()
     messages.success(request, "Tweet deleted")
     return JsonResponse({'status': 'success'})
-    # return redirect('home')
