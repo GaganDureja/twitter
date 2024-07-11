@@ -7,7 +7,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('user', '0002_remove_user_bg_imgg_remove_user_followers_and_more'),
+        ('users', '0002_remove_user_bg_imgg_remove_user_followers_and_more'),
     ]
 
     operations = [

@@ -23,16 +23,16 @@
         <input type="submit" value="Save" />
       </div>
     </form>
-    <a href="{% url 'user:Logout' %}" style="float: right">Logout</a>
+    <a href="{% url 'users:Logout' %}" style="float: right">Logout</a>
   </div>
 {% else %}
-  <a href="{% url 'user:newSession' %}" style="float: right">Login</a>
+  <a href="{% url 'users:newSession' %}" style="float: right">Login</a>
 {% endif %}
 <div>
   <h4>All Tweets</h4>
   {% for tweet in all_tweets %}
   <div class="tweet">
-    <a href="{% url 'user:UserDetails' tweet.user.id %}">
+    <a href="{% url 'users:UserDetails' tweet.user.id %}">
       <h6>{{ tweet.user.first_name }}</h6>
     </a>
     {% if tweet.last_edited_at %}
@@ -42,7 +42,7 @@
       <p>{{ tweet.tweet_message }}</p>
     {% else %}
       <p>Retweeted</p>
-      <a href="{% url 'user:UserDetails' tweet.original_tweet.user.id %}">
+      <a href="{% url 'users:UserDetails' tweet.original_tweet.user.id %}">
         <h6>{{ tweet.original_tweet.user.first_name }}</h6>
       </a>
       <p>{{ tweet.original_tweet.tweet_message }}</p>

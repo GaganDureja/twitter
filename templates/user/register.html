@@ -23,7 +23,7 @@
           <h4>Join Today.</h4>
           <form
             method="post"
-            action="{% url 'user:createRegistration' %}"
+            action="{% url 'users:createRegistration' %}"
           >
             {% csrf_token %}
             <div>
@@ -45,7 +45,7 @@
             <div>
               <input type="submit" value="Register" />
             </div>
-            <a href="{% url 'user:newSession' %}">Login</a>
+            <a href="{% url 'users:newSession' %}">Login</a>
           </form>
         </div>
       </div>

@@ -5,4 +5,4 @@ from django.contrib.auth.models import AbstractUser
 
 class User(AbstractUser):
   email = models.CharField(max_length=254, unique=True)
-  followers =models.ManyToManyField('user.User')
+  followers =models.ManyToManyField('users.User')
