@@ -1,9 +1,35 @@
 {% extends "includes/base.html" %}
+{% load follower_tags %}
 {% block main_content %}
 <a href="{% url 'home' %}" style="float: right">Home</a>
 <h4>User Details</h4>
 <div>
   <h6>First Name - {{ user.first_name }}</h6>
   <h6>Last Name - {{ user.last_name }}</h6>
+  <h6>Followers - {{ user.followers.count }}</h6>
+  {% if request.user|can_follow:user %}
+    <a href="javascript:void(0)" onclick="follow('POST')">Follow</a>
+  {% endif %}
+  {% if request.user|can_unfollow:user %}
+  <a href="javascript:void(0)" onclick="follow('DELETE')">Unfollow</a>
+  {% endif %}
 </div>
+{% endblock %}
+
+{% block specific_js %}
+  <script>
+    function follow(request_method) {
+      console.log("{{user.id}}");
+      fetch(`{% url 'users:ManageFollower' user.id %}`, {
+        method: request_method,
+        headers: {
+          'X-CSRFToken': '{{ csrf_token }}',
+        }
+      })
+      .then(response => response.json())
+      .then(data => {
+        window.location.reload();
+      });
+    }
+  </script>
 {% endblock %}
