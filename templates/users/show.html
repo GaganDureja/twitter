@@ -7,10 +7,10 @@
   <h6>First Name - {{ user.first_name }}</h6>
   <h6>Last Name - {{ user.last_name }}</h6>
   <h6>Followers - {{ user.followers.count }}</h6>
-  {% if request.user.id != user.id and request.user|is_following:user %}
+  {% if request.user.id != user.id and not request.user|is_following:user %}
     <a href="javascript:void(0)" onclick="follow('POST')">Follow</a>
   {% endif %}
-  {% if request.user.id != user.id and not request.user|is_following:user %}
+  {% if request.user.id != user.id and request.user|is_following:user %}
   <a href="javascript:void(0)" onclick="follow('DELETE')">Unfollow</a>
   {% endif %}
 </div>
