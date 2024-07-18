@@ -8,27 +8,13 @@
   <h6>Last Name - {{ user.last_name }}</h6>
   <h6>Followers - {{ user.followers.count }}</h6>
   {% if request.user.id != user.id and not request.user|is_following:user %}
-    <a href="javascript:void(0)" onclick="follow('POST')">Follow</a>
+    <form id="followRequestForm">
+      <a href="javascript:void(0)" onclick="asyncFormSubmission('{% url 'users:ManageFollower' user.id %}','POST','followRequestForm')">Follow</a>
+    </form>
   {% elif request.user.id != user.id and request.user|is_following:user %}
-  <a href="javascript:void(0)" onclick="follow('DELETE')">Unfollow</a>
+    <form id="unfollowRequestForm">
+      <a href="javascript:void(0)" onclick="asyncFormSubmission('{% url 'users:ManageFollower' user.id %}','DELETE','unfollowRequestForm')">Unfollow</a>
+    </form>
   {% endif %}
 </div>
-{% endblock %}
-
-{% block specific_js %}
-  <script>
-    function follow(request_method) {
-      console.log("{{user.id}}");
-      fetch(`{% url 'users:ManageFollower' user.id %}`, {
-        method: request_method,
-        headers: {
-          'X-CSRFToken': '{{ csrf_token }}',
-        }
-      })
-      .then(response => response.json())
-      .then(data => {
-        window.location.reload();
-      });
-    }
-  </script>
 {% endblock %}

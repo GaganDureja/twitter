@@ -26,5 +26,24 @@
 
     {% block specific_js %}
     {% endblock %}
+    <script>
+      function asyncFormSubmission(url, httpMethod, formId){
+        form = document.getElementById(formId);
+        body = new FormData(form);
+        formData = {};
+        body.forEach((value, key) => { formData[key] = value });
+        fetch(url, {
+          method: httpMethod,
+          headers: {
+            'X-CSRFToken': '{{ csrf_token }}',
+          },
+          body: JSON.stringify(formData)
+        })
+        .then(response => response.json())
+        .then(data => {
+          window.location.reload();
+        });
+      }
+    </script>
   </body>
 </html>

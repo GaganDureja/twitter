@@ -52,8 +52,9 @@
       <a href="{% url 'tweets:editTweet' tweet.id %}" style="margin-left: 20px;">Edit Tweet</a>
     {% endif %}
     {% if request.user|can_delete_tweet:tweet %}
-      <a href="javascript:void(0)" onclick="deleteData('{% url 'tweets:ManageTweet' tweet.id %}')" style="float: right">Delete Tweet</a>
-      <!-- href="{% url 'tweets:ManageTweet' tweet.id %}" -->
+      <form id="deleteTweetForm" style="display: inline;">
+        <a href="javascript:void(0)" onclick="asyncFormSubmission('{% url 'tweets:ManageTweet' tweet.id %}','DELETE','deleteTweetForm')" style="float: right">Delete Tweet</a>
+      </form>
     {% endif %}
     {% if request.user|can_retweet:tweet %}
       <form method="post" action="{% url 'tweets:reTweet' original_tweet_id=tweet.id %}" style="display: inline;">
@@ -77,25 +78,4 @@
     </ul>
   {% endif %}
 </div>
-{% endblock %}
-
-{% block specific_js %}
-  <script>
-    function deleteData(url) {
-      fetch(url, {
-        method: 'DELETE',
-        headers: {
-          'X-CSRFToken': '{{ csrf_token }}',
-        }
-      })
-      .then(response => response.json())
-      .then(data => {
-        if (data.status === 'success') {
-          window.location.reload();
-        }else{
-          alert('Error deleting tweet');
-        }
-      });
-    }
-  </script>
 {% endblock %}
