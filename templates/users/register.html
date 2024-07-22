@@ -19,10 +19,21 @@
           />
         </div>
         <div class="screen_50">
-          <h1>Login</h1>
-          <h4>Already have an account.</h4>
-          <form method="post" action="{% url 'user:createSession' %}">
+          <h1>Register</h1>
+          <h4>Join Today.</h4>
+          <form
+            method="post"
+            action="{% url 'users:createRegistration' %}"
+          >
             {% csrf_token %}
+            <div>
+              <label>First Name</label>
+              <input type="text" name="first_name" required />
+            </div>
+            <div>
+              <label>Last Name</label>
+              <input type="text" name="last_name" required />
+            </div>
             <div>
               <label>Email</label>
               <input type="email" name="email" required />
@@ -32,9 +43,9 @@
               <input type="password" name="password" required />
             </div>
             <div>
-              <input type="submit" value="Login" />
+              <input type="submit" value="Register" />
             </div>
-            <a href="{% url 'user:newRegistration' %}">Register</a>
+            <a href="{% url 'users:newSession' %}">Login</a>
           </form>
         </div>
       </div>

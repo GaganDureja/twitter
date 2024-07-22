@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect,get_object_or_404
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
@@ -6,7 +6,7 @@ from .models import User
 from django.http import Http404
 from tweets.models import Tweet
 from django.core.paginator import Paginator,PageNotAnInteger,EmptyPage
-
+from django.views import View
 
 
 def home(request):
@@ -19,11 +19,15 @@ def home(request):
     tweets = paginator.page(1)
   return render(request,'home.html', {'all_tweets': tweets})
 
+class UserViews(View):
+  def get(self, request, id):
+    user = get_object_or_404(User, id=id)
+    return render(request, 'users/show.html',{'user':user})
 
 def newRegistration(request):
   if request.user.is_authenticated:
     return redirect('home')
-  return render(request,'user/register.html')
+  return render(request,'users/register.html')
 
 def createRegistration(request):
   if request.method != 'POST':
@@ -45,7 +49,7 @@ def createRegistration(request):
 def newSession(request):
   if request.user.is_authenticated:
     return redirect('home')
-  return render(request,'user/login.html')
+  return render(request,'users/login.html')
 
 def createSession(request):
   if request.method != 'POST':

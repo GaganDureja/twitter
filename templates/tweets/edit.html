@@ -3,45 +3,24 @@
 <div>
   <a href="{% url 'home' %}" style="float: right">Home</a>
   <h4>Edit Tweet</h4>
-  <div>
-    <label>Tweet</label>
-    <textarea
-      type="text"
-      name="tweet_message"
-      rows="4"
-      cols="90"
-      maxlength="160"
-      style="resize: none"
-      placeholder="Share what's in your mind (max characters 160)"
-      required
-    >{{ tweet.tweet_message }}</textarea>
-  </div>
-  <div>
-    <button type="button" onclick="updateTweet()">Update</button>
-  </div>
-  <a href="{% url 'user:Logout' %}" style="float: right">Logout</a>
+  <form id="editTweetForm">
+    <div>
+      <label>Tweet</label>
+      <textarea
+        type="text"
+        name="tweet_message"
+        rows="4"
+        cols="90"
+        maxlength="160"
+        style="resize: none"
+        placeholder="Share what's in your mind (max characters 160)"
+        required
+      >{{ tweet.tweet_message }}</textarea>
+    </div>
+    <div>
+      <button type="button" onclick="asyncFormSubmission('{% url 'tweets:ManageTweet' tweet.id %}','PATCH','editTweetForm')">Update</button>
+    </div>
+  </form>
+  <a href="{% url 'users:Logout' %}" style="float: right">Logout</a>
 </div>
-{% endblock %}
-
-{% block specific_js %}
-  <script>
-    function updateTweet() {
-      tweetNewMessage = document.getElementsByName('tweet_message')[0].value;
-      fetch(`{% url 'tweets:ManageTweet' tweet.id %}`, {
-        method: 'PATCH',
-        headers: {
-          'X-CSRFToken': '{{ csrf_token }}',
-        },
-        body: JSON.stringify({ tweet_message: tweetNewMessage })
-      })
-      .then(response => response.json())
-      .then(data => {
-        if (data.status === 'success') {
-          window.location.reload();
-        }else{
-          alert('Error updating tweet');
-        }
-      });
-    }
-  </script>
 {% endblock %}

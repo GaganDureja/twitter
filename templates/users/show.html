@@ -1,0 +1,20 @@
+{% extends "includes/base.html" %}
+{% load follower_tags %}
+{% block main_content %}
+<a href="{% url 'home' %}" style="float: right">Home</a>
+<h4>User Details</h4>
+<div>
+  <h6>First Name - {{ user.first_name }}</h6>
+  <h6>Last Name - {{ user.last_name }}</h6>
+  <h6>Followers - {{ user.followers.count }}</h6>
+  {% if request.user.id != user.id and not request.user|is_following:user %}
+    <form id="followRequestForm">
+      <a href="javascript:void(0)" onclick="asyncFormSubmission('{% url 'users:ManageFollower' user.id %}','POST','followRequestForm')">Follow</a>
+    </form>
+  {% elif request.user.id != user.id and request.user|is_following:user %}
+    <form id="unfollowRequestForm">
+      <a href="javascript:void(0)" onclick="asyncFormSubmission('{% url 'users:ManageFollower' user.id %}','DELETE','unfollowRequestForm')">Unfollow</a>
+    </form>
+  {% endif %}
+</div>
+{% endblock %}
