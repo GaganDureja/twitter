@@ -48,11 +48,11 @@
       <p>{{ tweet.original_tweet.tweet_message }}</p>
     {% endif %}
 
-    {% if request.user|can_like:tweet %}
+    {% if request.user.id and request.user|can_like:tweet %}
       <form id="LikeRequestForm">
         <a href="javascript:void(0)" onclick="asyncFormSubmission('{% url 'tweets:LikeTweet' tweet.id %}','POST','LikeRequestForm')">Like</a>
       </form>
-    {% else %}
+    {% elif request.user.id and not request.user|can_like:tweet %}
       <form id="unLikeRequestForm">
         <a href="javascript:void(0)" onclick="asyncFormSubmission('{% url 'tweets:LikeTweet' tweet.id %}','DELETE','unLikeRequestForm')">UnLike</a>
       </form>
