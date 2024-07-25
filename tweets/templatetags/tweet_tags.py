@@ -23,3 +23,7 @@ def can_retweet(user, tweet):
   if user.id == tweet.user_id:
     return False
   return True
+
+@register.filter
+def can_like(user, tweet):
+  return user not in tweet.likes.all()
