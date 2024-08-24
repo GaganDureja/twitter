@@ -1,5 +1,5 @@
 from django import template
-
+from tweets.likes.models import Likes
 register = template.Library()
 
 @register.filter
@@ -26,4 +26,5 @@ def can_retweet(user, tweet):
 
 @register.filter
 def can_like(user, tweet):
-  return user not in tweet.likes.all()
+  # return user not in tweet.likes.all()
+  return not Likes.objects.filter(tweet=tweet, user=user).exists()
