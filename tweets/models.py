@@ -1,5 +1,6 @@
 from django.db import models
 from users.models import User
+from tweets.likes.models import Likes
 # Create your models here.
 
 
