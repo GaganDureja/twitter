@@ -12,7 +12,8 @@ from django.views import View
 def home(request):
   all_tweets = Tweet.objects.all().order_by('-id')
   page = request.GET.get('page', 1)
-  paginator = Paginator(all_tweets, 10)
+  limit = request.GET.get('limit', 5)
+  paginator = Paginator(all_tweets, limit)
   try:
     tweets = paginator.page(page)
   except (PageNotAnInteger, EmptyPage):

@@ -1,0 +1,18 @@
+{% extends "includes/base.html" %}
+{% block main_content %}
+{% load tagfollower_tags %}
+<div>
+  <h4>Tag Details</h4>
+  <div>
+    <h6>{{ tag.name }}</h6>
+    {% if request.user.is_authenticated and not request.user|is_following_tag:tag %}
+      <form id="tagFollowRequestForm">
+        <a href="javascript:void(0)" onclick="asyncFormSubmission('{% url 'tags:ManageTagFollower' tag.id %}','POST','tagFollowRequestForm')">Follow</a>
+      </form>
+    {% elif request.user.is_authenticated and request.user|is_following_tag:tag %}
+      <form id="tagUnfollowRequestForm">
+        <a href="javascript:void(0)" onclick="asyncFormSubmission('{% url 'tags:ManageTagFollower' tag.id %}','DELETE','tagUnfollowRequestForm')">Unfollow</a>
+      </form>
+    {% endif %}
+  </div>
+{% endblock %}
