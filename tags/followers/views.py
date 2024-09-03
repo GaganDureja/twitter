@@ -3,23 +3,18 @@ from tags.models import Tag
 from django.contrib import messages
 from django.views import View
 from django.http import JsonResponse
+from tags.followers.models import tagsFollowers
 # Create your views here.
 
 class TagFollowersView(View):
   def post(self, request, id):
     tag = get_object_or_404(Tag, id=id)
-    if request.user.id in tag.followers.all():
-      messages.error(request,"You are already following this tag")
-      return JsonResponse({'status': 422})
-    tag.followers.add(request.user.id)
+    tagsFollowers.objects.create(user=request.user, tag=tag)
     messages.success(request, "Following Tag now")
     return JsonResponse({'status': 200})
 
   def delete(self, request, id):
-    tag = get_object_or_404(Tag, id=id)
-    if not tag.followers.filter(id=request.user.id).exists():
-      messages.error(request,"You haven't followed this Tag")
-      return JsonResponse({'status': 422})
-    tag.followers.remove(request.user.id)
+    tag_following = get_object_or_404(tagsFollowers, tag_id=id, user_id=request.user.id)
+    tag_following.delete()
     messages.success(request, "Unfollowing now")
     return JsonResponse({'status': 200})
