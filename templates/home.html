@@ -81,11 +81,11 @@
   {% if all_tweets.paginator.num_pages > 1 %}
     <ul class="pagination">
       {% if all_tweets.has_previous %}
-        <li><a href="?page={{ all_tweets.previous_page_number }}">Previous</a></li>
+        <li><a href="?page={{ all_tweets.previous_page_number }}&limit=5">Previous</a></li>
       {% endif %}
       <li><a href="#" class="active">{{ all_tweets.number }}</a> </li>
       {% if all_tweets.has_next %}
-        <li><a href="?page={{ all_tweets.next_page_number }}">Next</a></li>
+        <li><a href="?page={{ all_tweets.next_page_number }}&limit=5">Next</a></li>
       {% endif %}
     </ul>
   {% endif %}
